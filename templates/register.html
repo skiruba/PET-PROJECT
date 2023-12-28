@@ -1,0 +1,59 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+
+<div class="container">
+	<h1 class="display-2">
+		<div class="mt-5">
+			Registration
+		</div>
+	</h1>
+    <div class="row">
+        <div class="col">
+            <form action="/reguser" method="post">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="user_email_address" name="user_email_address" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">Please provide a valid email address</div>
+                </div>
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name">
+                </div>
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name" >
+                </div>
+                <div class="mb-3">
+                    <label for="user_age" class="form-label">Age</label>
+                    <input type="text" class="form-control" id="user_age" name="user_age" placeholder="Enter Your Age" >
+                </div>
+                <div class="mb-3">
+                    <label for="user_gender" class="form-label">Gender</label>
+                    <select class="form-select" id="user_gender" name="user_gender"> 
+                        <option selected>Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="user_username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="user_username" name="user_username" placeholder="Enter Login Username" >
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="user_password" name="user_password">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col">
+        <!--p>Please register to be able to post your pet.  Read the terms and conditions for the web site.</p-->
+        </div>
+    </div>
+    <br>
+    <br><br><br>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends '_layout.html' %} {% block body %}
+<div class="container">
+	<br />
+	<h1>Learning Center</h1>
+	<div class="row">
+		<div class="col">
+                  <hr>
+                  <h4>Caring for your Dog</h4>
+                  <a href="https://www.hillspet.com/dog-care/routine-care?cq_src=google_ads&cq_cmp=11419507370&cq_con=108583279821&cq_term=how%20to%20take%20care%20of%20a%20dog&cq_med=&cq_plac=&cq_net=g&cq_plt=gp&gclid=CjwKCAjwsJ6TBhAIEiwAfl4TWMCtl9zGOnbqt8DJhb5T1l8fpUsZ9V1reaZ84er5LAfiThxpUJBPEBoCgYcQAvD_BwE&gclsrc=aw.ds">
+                  Taking care of your dog is very important! Please take a look at this website for any help.</a>
+                  <hr>
+                  <h4>Caring for your Cat</h4>
+                  <a href="https://www.hillspet.com/cat-care/routine-care?cq_src=google_ads&cq_cmp=11419507178&cq_con=112112921415&cq_term=caring%20for%20a%20cat&cq_med=&cq_plac=&cq_net=g&cq_plt=gp&gclid=CjwKCAjwsJ6TBhAIEiwAfl4TWC2Naa_jwzTlNgrGPtoRgHFVQwxWaG5EiXYlELU9B8TKcJf78JKN2BoCqPIQAvD_BwE&gclsrc=aw.ds">
+                  Taking care of your cat is very important! Please take a look at this website for any help.</a>
+                  <hr>
+                  <h4>Learn about dog breeds that fit your family and lifestyle</h4>
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#breedVideo">Learn about Dog Breeds</a>
+                  <hr>
+                  <h4>Emergency Services</h4>
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#vetMap">Find vetrinarians near me</a>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="breedVideo" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Learn about Dog Breeds</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <iframe width="100%" height="450" src="https://www.youtube.com/embed/fcyshDExRuQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+      </div>
+      </div>
+</div>
+
+<div class="modal fade" id="vetMap" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Emergency Services</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d45101.659151367974!2d-80.89738598877048!3d35.47324399388022!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sveterinarian%20near%20me!5e0!3m2!1sen!2sus!4v1652031171586!5m2!1sen!2sus" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+      </div>
+      </div>
+</div>
+
+
+
+{% endblock %}

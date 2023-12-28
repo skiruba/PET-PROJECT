@@ -1,0 +1,87 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+
+<div class="container">
+  <div class="space-10"></div>
+  <div class="space-10"></div>
+<div class="row">
+  <div class="col">
+    
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <h3>My Account</h3>
+    <div class="space-10"></div>
+    <form action="/account" method="post">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="user_email_address" name="user_email_address" aria-describedby="emailHelp" value="{{data.user_email_address}}">
+        <div id="emailHelp" class="form-text">Please provide a valid email address</div>
+    </div>
+    <div class="mb-3">
+        <label for="first_name" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name" value="{{data.first_name}}">
+    </div>
+    <div class="mb-3">
+        <label for="last_name" class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name" value="{{data.last_name}}">
+    </div>
+    <div class="mb-3">
+        <label for="user_age" class="form-label">Age</label>
+        <input type="text" class="form-control" id="user_age" name="user_age" placeholder="Enter Your Age" value="{{data.user_age}}">
+    </div>
+    <div class="mb-3">
+        <label for="user_gender" class="form-label">Gender</label>
+        <select class="form-select" id="user_gender" name="user_gender" > 
+            <option value="Male" {% if data.user_gender == 'Male'%}Selected{%endif%}>Male</option>
+            <option value="Female" {% if data.user_gender == 'Female'%}Selected{%endif%}>Female</option>
+            <option value="Other" {% if data.user_gender == 'Other'%}Selected{%endif%}>Other</option>
+        </select>
+    </div>
+
+    
+    <button type="submit" class="btn btn-primary"><i class="fas fa-user-edit"></i> Save</button>
+    </form>
+  </div>
+  <div class="col">
+    <h3>Information</h3>
+    <div class="space-10"></div>
+    <p>
+      You can maintain your account by making changes and saving them.  Please be sure to confirm your informatioin before saving.
+    </p>
+    <p>
+      You can also deactivate your account which will delete all of your listings.  Your bill will be pro-rated up until the date you deactivated.
+    </p>
+    <!--button class="btn btn-danger">Deactivate</button-->
+    
+
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Deactivate
+    </button>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Deactivate Account</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to deactivate your account?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="/deactivate" class="btn btn-danger">Deactivate</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

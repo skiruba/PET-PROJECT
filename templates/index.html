@@ -1,0 +1,123 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+
+
+	<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-indicators">
+		  <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+		  <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+		  <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+		</div>
+		<div class="carousel-inner">
+		  <div class="carousel-item active">
+			<img src="/static/images/carousel1.jpg" class="d-block w-100" alt="...">
+	
+			<div class="container">
+			  <div class="carousel-caption text-start">
+				<h1>Find You Next Pet</h1>
+				<p>Pets can change your life in ways you never imagined.</p>
+				<p><a class="btn btn-lg btn-primary" href="/browse?pettype=All">Find Pets</a></p>
+			  </div>
+			</div>
+		  </div>
+		  <div class="carousel-item">
+			<!--svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg-->
+			<img src="/static/images/carousel2.jpg" class="d-block w-100" alt="...">
+	
+			<div class="container">
+			  <div class="carousel-caption">
+				<h1>List Your Pet</h1>
+				<p>You can register to list one or more pets for sale or adoption.</p>
+				<p><a class="btn btn-lg btn-primary" href="/register">Register</a></p>
+			  </div>
+			</div>
+		  </div>
+		  <div class="carousel-item">
+			<img src="/static/images/carousel3.jpg" class="d-block w-100" alt="...">
+	
+			<div class="container">
+			  <div class="carousel-caption text-end">
+				<h1>About PetFinder</h1>
+				<p>Find out about how PetFinder can help you find or sell your next pet</p>
+				<p><a class="btn btn-lg btn-primary" href="/aboutus">About</a></p>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+		  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		  <span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+		  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		  <span class="visually-hidden">Next</span>
+		</button>
+	  </div>
+
+	  <div class="container marketing">
+
+		<!-- Three columns of text below the carousel -->
+		<div class="row">
+		  <div class="col-lg-4">
+			
+			
+			<h2>Adopting</h2>
+			<p>The easiest way to find and adopt your next pet. Give it a try!</p>
+			<p><a class="btn btn-secondary" href="/browse?pettype=All">Browse &raquo;</a></p>
+		  </div><!-- /.col-lg-4 -->
+		  <div class="col-lg-4">
+			
+	
+			<h2>Listing</h2>
+			<p>We simplify the process of listing your pet to find it a new home</p>
+			<p><a class="btn btn-secondary" href="/register">Register &raquo;</a></p>
+		  </div><!-- /.col-lg-4 -->
+		  <div class="col-lg-4">
+			
+	
+			<h2>Learning</h2>
+			<p>A wealth of content to help you learn how to care for your new pet</p>
+			<p><a class="btn btn-secondary" href="/external-sources">Learn &raquo;</a></p>
+		  </div><!-- /.col-lg-4 -->
+		</div><!-- /.row -->
+	
+	
+		<!-- START THE FEATURETTES -->
+	
+		<hr class="featurette-divider">
+	
+		<div class="row featurette">
+		  <div class="col-md-7">
+			<h2 class="featurette-heading">Listing Your Pet is as easy as 123</h2>
+			<p class="lead">We have simplified the process of listing your pet for sale or adoption.  Simply register on the site and post your pet. Owners will find pets and contact you.</p>
+			<p class="lead">We are always here to help. Email us and we will be happy to help find your pet a home.</p>
+		  </div>
+		  <div class="col-md-5">
+			
+			<img src="/static/images/feature1.jpg"/>
+		  </div>
+		</div>
+	
+		<hr class="featurette-divider">
+	
+		<div class="row featurette">
+		  <div class="col-md-7 order-md-2">
+			<h2 class="featurette-heading">Learning to Care for your Pets</h2>
+			<p class="lead">We have a wealth of information to learn about pets.  Everything from how to care for them to selecting the right breed that fits for your family and lifestyle.</p>
+		  </div>
+		  <div class="col-md-5 order-md-1">
+			<img src="/static/images/feature2.jpg"/>
+	
+		  </div>
+		</div>
+	
+		
+		<hr class="featurette-divider">
+	
+		<!-- /END THE FEATURETTES -->
+	
+	  </div><!-- /.container -->
+
+
+{% endblock %}

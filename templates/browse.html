@@ -1,0 +1,52 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+
+<div class="container">
+    <div class="space-10"></div>
+    <h1>Browse Pets </h1>
+    <div class="row g-3">
+        <form action="/browse" method="get">
+        <div class="col">
+            <div class="mt-4">
+                <label for="pettype" class="form-label"><i class="fas fa-filter"></i> Pet Type</label>
+                <select class="form-select" id="pettype" name="pettype">
+                    <option value="All" {% if query == 'All'%}Selected{%endif%}>All</option>
+                    <option value="Dog" {% if query == 'Dog'%}Selected{%endif%}>Dog</option>
+                    <option value="Cat" {% if query == 'Cat'%}Selected{%endif%}>Cat</option>
+                    <option value="Bird"{% if query == 'Bird'%}Selected{%endif%}>Bird</option>
+                </select>    
+            </div>
+        </div>
+        <div class="col">
+            <div class="mt-5">
+                <button class="btn btn-primary" type="submit">Query</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+<br><br><br>
+
+<div class="container">
+    <div class="card-deck">
+        <div class="row gy-5">
+            
+            {%for pet in data%}
+                <div class="col-sm-6">
+                    <div class="card">
+                        <a href="/petview/{{pet.pet_id}}">
+                            <img class="card-img-top" src="./static/{{pet.photo}}"  alt="Picture of {{pet.pet_name}}" >
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">{{pet.pet_name}}</h5>
+                            <h5 class="card-title">{{pet.city}}, {{pet.state}}</h5>
+                        </div>
+                    </div>
+                </div>
+            {%endfor%}
+        </div>
+    </div>
+</div>
+
+    {% endblock %}

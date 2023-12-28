@@ -1,0 +1,321 @@
+{% extends '_layout.html' %} 
+
+{% block body %}
+
+<div class="container">
+    <div class="space-10"></div>
+    <h1>Meet {{data[0].Pet.pet_name}}</h1>
+    <div class="space-10"></div>
+    <div class="row">
+        <div class="col">
+          <img src="/static/{{data[0].Pet.photo}}" width="500" height="300"/>
+        </div>
+        <div class="col">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td><strong>Age</strong></td>
+                <td>{{data[0].Pet.pet_age}} Year</td>
+              </tr>
+              <tr>
+                <td><strong>Breed</strong></td>
+                <td>{{data[0].Pet.pet_breed}}</td>
+              </tr>
+              <tr>
+                <td><strong>Gender</strong></td>
+                <td>{{data[0].Pet.pet_gender}}</td>
+              </tr>
+              <tr>
+                <td><strong>Health</strong></td>
+                <td>{{data[0].Pet.pet_health}}</td>
+              </tr>
+              <tr>
+                <td><strong>Training</strong></td>
+                <td>{{data[0].Pet.pet_training}}</td>
+              </tr>
+              <tr>
+                <td><strong>Location</strong></td>
+                <td>{{data[0].Pet.city}}, {{data[0].Pet.state}}</td>
+              </tr>
+              <tr>
+                <td><strong>Contact</strong></td>
+                <td><a href="mailto:{{data[0].User.user_email_address}}?subject=PetFinder%20Inquiry:%20{{data[0].Pet.pet_name.replace(' ', '%20')}}"><i class="fas fa-envelope"></i> {{data[0].User.user_email_address}}</a></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td style="text-align:right;">
+                  {% if session['user'] is defined %}
+                    {% if session['user'].user_id == data[0].Pet.pet_owner %}
+                      <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editModel">
+                        Edit Your Pet
+                      </button>
+                      <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModel">
+                        Remove
+                      </button>
+                    {% endif %}
+                  {% endif %}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div><!-- End Row -->
+    <br>
+    <div class="row">
+      <div class="col">
+        <h3>About {{data[0].Pet.pet_name}} </h3>
+        <p>{{data[0].Pet.pet_about}}</p>
+      </div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div class="col">
+        <h3>Comments and Questions</h3>
+      </div>
+      <div class="col tright">
+        {% if session['user'] is defined %}
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModel">
+            Post Comment
+          </button>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col text-right">
+        {%for comment in comments%}
+          <div class="comment">
+            <div class="content">{{comment[0].comment_content}}</div>
+            <div class="author"><i class="fas fa-user"></i> Author: {{comment[1].user_username}}&nbsp;&nbsp;&nbsp;
+              {% if session['user'] is defined %} 
+                {% if comment[0].author_id == session['user'].user_id %}
+                  <a href="/deletecomment?cid={{comment[0].comment_id}}"><i class="fas fa-trash"></i></a>
+                {% endif %}
+                {% if comment[0].author_id == session['user'].user_id %}
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#commentEditModel" data-comment="{{comment[0].comment_content}}" data-cid="{{comment[0].comment_id}}">
+                  <i class="fas fa-edit"></i>
+                </button>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        {%endfor%}
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="commentModel" tabindex="-1" aria-labelledby="commentModel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Comment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/postcomment" method="POST">
+        <div class="modal-body">
+            <div class="mb-3">
+              <label for="comment_content" class="form-label">Comment / Question</label>
+              <textarea class="form-control" id="comment_content" name="comment_content" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="commentEditModel" tabindex="-1" aria-labelledby="commentEditModel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Comment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/editcomment" method="POST">
+        <div class="modal-body">
+            <div class="form-group">
+              <label for="comment_content" class="form-label">Comment / Question</label>
+              <textarea class="form-control" id="comment_content" name="comment_content" rows="3"></textarea>
+            </div>
+            <div class="invisible">
+              <input type="text" class="form-control" id="comment_id" name="comment_id" value="5">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="confirmModel" tabindex="-1" aria-labelledby="confirmModel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Remove Listing</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/remove" method="POST">
+        <div class="modal-body">
+          <p>Are you sure you want to remove your listing?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Remove</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editModel" tabindex="-1" aria-labelledby="editModel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Comment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/editpet" method="POST">
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                  <label for="pet_type" class="form-label">Pet Type</label>
+                  <select class="form-select" id="pet_type" name="pet_type"> 
+                      <option value="Dog" {% if data[0].Pet.pet_type == 'Dog'%}Selected{%endif%}>Dog</option>
+                      <option value="Cat" {% if data[0].Pet.pet_type == 'Cat'%}Selected{%endif%}>Cat</option>
+                      <option value="Bird" {% if data[0].Pet.pet_type == 'Bird'%}Selected{%endif%}>Bird</option>
+                  </select>
+              </div>
+              <div class="mb-3">
+                  <label for="pet_name" class="form-label">Pet Name</label>
+                  <input type="text" class="form-control" id="pet_name" name="pet_name" aria-describedby="namelHelp" value="{{data[0].Pet.pet_name}}">
+                  <div id="nameHelp" class="form-text">Enter the name of your pet</div>
+              </div>
+              <div class="mb-3">
+                  <label for="pet_age" class="form-label">Age</label>
+                  <input type="text" class="form-control" id="pet_age" name="pet_age" placeholder="1" aria-describedby="ageHelp" value="{{data[0].Pet.pet_age}}">
+                  <div id="ageHelp" class="form-text">Enter the age of your pet in years</div>
+              </div>
+              <div class="mb-3">
+                  <label for="pet_gender" class="form-label">Gender</label>
+                  <select class="form-select" id="pet_gender" name="pet_gender"> 
+                      <option>Select Gender</option>
+                      <option value="Male" {% if data[0].Pet.pet_gender == 'Male'%}Selected{%endif%}>Male</option>
+                      <option value="Female" {% if data[0].Pet.pet_gender == 'Female'%}Selected{%endif%}>Female</option>
+                      <option value="Other"{% if data[0].Pet.pet_gender == 'Other'%}Selected{%endif%}>Other</option>
+                  </select>
+              </div>
+              <div class="mb-3">
+                  <label for="pet_breed" class="form-label">Pet Breed</label>
+                  <input type="text" class="form-control" id="pet_breed" name="pet_breed" placeholder="Ex: German Shepard" aria-describedby="breedHelp" value="{{data[0].Pet.pet_breed}}">
+                  <div id="breedHelp" class="form-text">Enter the breed of your pet</div>
+              </div>
+              <div class="mb-3">
+                <label for="pet_health" class="form-label">Pet Health</label>
+                <textarea class="form-control" id="pet_health" name="pet_health" rows="3">{{data[0].Pet.pet_health}}</textarea>
+              </div>
+
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                <label for="pet_training" class="form-label">Pet Training</label>
+                <textarea class="form-control" id="pet_training" name="pet_training" rows="3">{{data[0].Pet.pet_training}}</textarea>
+              </div>
+              <div class="mb-3">
+                <label for="pet_about" class="form-label">Tell Us About Your Pet</label>
+                <textarea class="form-control" id="pet_about" name="pet_about" rows="3">{{data[0].Pet.pet_about}}</textarea>
+              </div>
+              <div class="mb-3">
+                  <label for="city" class="form-label">City</label>
+                  <input type="text" class="form-control" id="city" name="city" aria-describedby="cityHelp" value="{{data[0].Pet.city}}">
+                  <div id="cityHelp" class="form-text">Enter city where your pet is located</div>
+              </div>
+              <div class="mb-3">
+                  <label for="state" class="form-label">State</label>
+                  <select class="form-select" id="state" name="state"> 
+                      <option value="AL" {% if data[0].Pet.state == 'AL'%}Selected{%endif%}>Alabama</option>
+                      <option value="AK" {% if data[0].Pet.state == 'AK'%}Selected{%endif%}>Alaska</option>
+                      <option value="AZ" {% if data[0].Pet.state == 'AZ'%}Selected{%endif%}>Arizona</option>
+                      <option value="AR" {% if data[0].Pet.state == 'AR'%}Selected{%endif%}>Arkansas</option>
+                      <option value="CA" {% if data[0].Pet.state == 'CA'%}Selected{%endif%}>California</option>
+                      <option value="CO" {% if data[0].Pet.state == 'CO'%}Selected{%endif%}>Colorado</option>
+                      <option value="CT" {% if data[0].Pet.state == 'CT'%}Selected{%endif%}>Connecticut</option>
+                      <option value="DE" {% if data[0].Pet.state == 'DE'%}Selected{%endif%}>Delaware</option>
+                      <option value="DC" {% if data[0].Pet.state == 'DC'%}Selected{%endif%}>District Of Columbia</option>
+                      <option value="FL" {% if data[0].Pet.state == 'FL'%}Selected{%endif%}>Florida</option>
+                      <option value="GA" {% if data[0].Pet.state == 'GA'%}Selected{%endif%}>Georgia</option>
+                      <option value="HI" {% if data[0].Pet.state == 'HI'%}Selected{%endif%}>Hawaii</option>
+                      <option value="ID" {% if data[0].Pet.state == 'ID'%}Selected{%endif%}>Idaho</option>
+                      <option value="IL" {% if data[0].Pet.state == 'IL'%}Selected{%endif%}>Illinois</option>
+                      <option value="IN" {% if data[0].Pet.state == 'IN'%}Selected{%endif%}>Indiana</option>
+                      <option value="IA" {% if data[0].Pet.state == 'IA'%}Selected{%endif%}>Iowa</option>
+                      <option value="KS" {% if data[0].Pet.state == 'KS'%}Selected{%endif%}>Kansas</option>
+                      <option value="KY" {% if data[0].Pet.state == 'KY'%}Selected{%endif%}>Kentucky</option>
+                      <option value="LA" {% if data[0].Pet.state == 'LA'%}Selected{%endif%}>Louisiana</option>
+                      <option value="ME" {% if data[0].Pet.state == 'ME'%}Selected{%endif%}>Maine</option>
+                      <option value="MD" {% if data[0].Pet.state == 'MD'%}Selected{%endif%}>Maryland</option>
+                      <option value="MA" {% if data[0].Pet.state == 'MA'%}Selected{%endif%}>Massachusetts</option>
+                      <option value="MI" {% if data[0].Pet.state == 'MI'%}Selected{%endif%}>Michigan</option>
+                      <option value="MN" {% if data[0].Pet.state == 'MN'%}Selected{%endif%}>Minnesota</option>
+                      <option value="MS" {% if data[0].Pet.state == 'MS'%}Selected{%endif%}>Mississippi</option>
+                      <option value="MO" {% if data[0].Pet.state == 'MO'%}Selected{%endif%}>Missouri</option>
+                      <option value="MT" {% if data[0].Pet.state == 'MT'%}Selected{%endif%}>Montana</option>
+                      <option value="NE" {% if data[0].Pet.state == 'NE'%}Selected{%endif%}>Nebraska</option>
+                      <option value="NV" {% if data[0].Pet.state == 'NV'%}Selected{%endif%}>Nevada</option>
+                      <option value="NH" {% if data[0].Pet.state == 'NH'%}Selected{%endif%}>New Hampshire</option>
+                      <option value="NJ" {% if data[0].Pet.state == 'NJ'%}Selected{%endif%}>New Jersey</option>
+                      <option value="NM" {% if data[0].Pet.state == 'NM'%}Selected{%endif%}>New Mexico</option>
+                      <option value="NY" {% if data[0].Pet.state == 'NY'%}Selected{%endif%}>New York</option>
+                      <option value="NC" {% if data[0].Pet.state == 'NC'%}Selected{%endif%}>North Carolina</option>
+                      <option value="ND" {% if data[0].Pet.state == 'ND'%}Selected{%endif%}>North Dakota</option>
+                      <option value="OH" {% if data[0].Pet.state == 'OH'%}Selected{%endif%}>Ohio</option>
+                      <option value="OK" {% if data[0].Pet.state == 'OK'%}Selected{%endif%}>Oklahoma</option>
+                      <option value="OR" {% if data[0].Pet.state == 'OR'%}Selected{%endif%}>Oregon</option>
+                      <option value="PA" {% if data[0].Pet.state == 'PA'%}Selected{%endif%}>Pennsylvania</option>
+                      <option value="RI" {% if data[0].Pet.state == 'RI'%}Selected{%endif%}>Rhode Island</option>
+                      <option value="SC" {% if data[0].Pet.state == 'SC'%}Selected{%endif%}>South Carolina</option>
+                      <option value="SD" {% if data[0].Pet.state == 'SD'%}Selected{%endif%}>South Dakota</option>
+                      <option value="TN" {% if data[0].Pet.state == 'TN'%}Selected{%endif%}>Tennessee</option>
+                      <option value="TX" {% if data[0].Pet.state == 'TX'%}Selected{%endif%}>Texas</option>
+                      <option value="UT" {% if data[0].Pet.state == 'UT'%}Selected{%endif%}>Utah</option>
+                      <option value="VT" {% if data[0].Pet.state == 'VT'%}Selected{%endif%}>Vermont</option>
+                      <option value="VA" {% if data[0].Pet.state == 'VA'%}Selected{%endif%}>Virginia</option>
+                      <option value="WA" {% if data[0].Pet.state == 'WA'%}Selected{%endif%}>Washington</option>
+                      <option value="WV" {% if data[0].Pet.state == 'WV'%}Selected{%endif%}>West Virginia</option>
+                      <option value="WI" {% if data[0].Pet.state == 'WI'%}Selected{%endif%}>Wisconsin</option>
+                      <option value="WY" {% if data[0].Pet.state == 'WY'%}Selected{%endif%}>Wyoming</option>
+                  </select>
+              </div>
+
+            </div>
+          </div>
+      
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#commentEditModel').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) 
+    var content = button.data('comment') 
+    var cid = button.data('cid') 
+
+    var modal = $(this)
+    modal.find('.modal-body textarea').text(content)
+    modal.find('.modal-body input').val(cid)
+  })
+</script>
+
+{% endblock %}

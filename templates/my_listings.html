@@ -1,0 +1,35 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+
+
+
+<div class="container">
+    <div class="space-10"></div>
+    <div class="row">
+        <div class="col">
+            <h1>My Listings</h1>
+        </div>
+    </div>
+    <div class="space-10"></div>
+    <div class="card-deck">
+        <div class="row gy-5">
+            
+            {%for pet in data%}
+                <div class="col-sm-6">
+                    <div class="card">
+                        <a href="/petview/{{pet.pet_id}}">
+                            <img class="card-img-top" src="./static/{{pet.photo}}"  alt="Picture of {{pet.pet_name}}" >
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">{{pet.pet_name}}</h5>
+                            <h5 class="card-title">{{pet.city}}, {{pet.state}}</h5>
+                        </div>
+                    </div>
+                </div>
+            {%endfor%}
+        </div>
+    </div>
+</div>
+
+    {% endblock %}
